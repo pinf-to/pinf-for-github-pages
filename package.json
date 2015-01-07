@@ -1,0 +1,11 @@
+{
+  "name": "pinf-for-github-pages",
+  "version": "0.0.1",
+  "bin": {
+    "pinf-publish": "./bin/pinf-publish"
+  },
+  "dependencies": {
+    "fs-extra": "~0.14.0",
+    "pinf-loader-js": "~0.4.6"
+  }
+}
