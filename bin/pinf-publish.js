@@ -75,17 +75,17 @@ function main (callback) {
 
 						if (
 							programDescriptor.combined.config &&
-							programDescriptor.combined.config["github.com/pinf-it/pinf-for-github-pages/0"] &&
-							programDescriptor.combined.config["github.com/pinf-it/pinf-for-github-pages/0"].programs
+							programDescriptor.combined.config["github.com/pinf-to/pinf-to-github-pages/0"] &&
+							programDescriptor.combined.config["github.com/pinf-to/pinf-to-github-pages/0"].programs
 						) {
-							for (var programId in programDescriptor.combined.config["github.com/pinf-it/pinf-for-github-pages/0"].programs) {
+							for (var programId in programDescriptor.combined.config["github.com/pinf-to/pinf-to-github-pages/0"].programs) {
 								waitfor(
-									PATH.join(PATH.dirname(programDescriptorPath), programDescriptor.combined.config["github.com/pinf-it/pinf-for-github-pages/0"].programs[programId]),
+									PATH.join(PATH.dirname(programDescriptorPath), programDescriptor.combined.config["github.com/pinf-to/pinf-to-github-pages/0"].programs[programId]),
 									publishProgram
 								);
 							}
 						} else {
-							console.log("No programs to publish configured at 'config[\"github.com/pinf-it/pinf-for-github-pages/0\"].programs' in '" + programDescriptor.descriptorPaths.join(", ") + "'");
+							console.log("No programs to publish configured at 'config[\"github.com/pinf-to/pinf-to-github-pages/0\"].programs' in '" + programDescriptor.descriptorPaths.join(", ") + "'");
 						}
 
 						return waitfor();
@@ -102,18 +102,18 @@ function main (callback) {
 
 					var templatePath = (
 						programDescriptor.combined.config &&
-						programDescriptor.combined.config["github.com/pinf-it/pinf-for-github-pages/0"] &&
-						programDescriptor.combined.config["github.com/pinf-it/pinf-for-github-pages/0"].templates &&
-						programDescriptor.combined.config["github.com/pinf-it/pinf-for-github-pages/0"].templates["index.html"] &&
-						PATH.join(PATH.dirname(programDescriptorPath), programDescriptor.combined.config["github.com/pinf-it/pinf-for-github-pages/0"].templates["index.html"])
+						programDescriptor.combined.config["github.com/pinf-to/pinf-to-github-pages/0"] &&
+						programDescriptor.combined.config["github.com/pinf-to/pinf-to-github-pages/0"].templates &&
+						programDescriptor.combined.config["github.com/pinf-to/pinf-to-github-pages/0"].templates["index.html"] &&
+						PATH.join(PATH.dirname(programDescriptorPath), programDescriptor.combined.config["github.com/pinf-to/pinf-to-github-pages/0"].templates["index.html"])
 					) || PATH.join(__dirname, "../lib/templates/index.html");
 
 					var loaderPath = (
 						programDescriptor.combined.config &&
-						programDescriptor.combined.config["github.com/pinf-it/pinf-for-github-pages/0"] &&
-						programDescriptor.combined.config["github.com/pinf-it/pinf-for-github-pages/0"].templates &&
-						programDescriptor.combined.config["github.com/pinf-it/pinf-for-github-pages/0"].templates["loader.js"] &&
-						PATH.join(PATH.dirname(programDescriptorPath), programDescriptor.combined.config["github.com/pinf-it/pinf-for-github-pages/0"].templates["loader.js"])
+						programDescriptor.combined.config["github.com/pinf-to/pinf-to-github-pages/0"] &&
+						programDescriptor.combined.config["github.com/pinf-to/pinf-to-github-pages/0"].templates &&
+						programDescriptor.combined.config["github.com/pinf-to/pinf-to-github-pages/0"].templates["loader.js"] &&
+						PATH.join(PATH.dirname(programDescriptorPath), programDescriptor.combined.config["github.com/pinf-to/pinf-to-github-pages/0"].templates["loader.js"])
 					) || PATH.join(__dirname, "../node_modules/pinf-loader-js/loader.js");
 
 
