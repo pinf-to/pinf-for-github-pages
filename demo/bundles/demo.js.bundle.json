@@ -9,8 +9,8 @@
             "descriptor": {
               "filename": "demo.js",
               "filepath": "demo.js",
-              "mtime": 1421301877,
-              "code": "\nvar $ = require(\"./lib/zepto\").window.$;\n\n\nexports.main = function () {\n\nconsole.log(\"$\", $);\n\nconsole.log(\"2\", $(\"<h1>Hello from PINF-bundled JavaScript Program</h1>\"));\n\n\t$(\"<h1>Hello from PINF-bundled JavaScript Program</h1>\").appendTo(\"BODY\");\n\n}\n",
+              "mtime": 1421301922,
+              "code": "\nvar $ = require(\"./lib/zepto\").window.$;\n\n\nexports.main = function () {\n\n\t$(\"<h1>Hello from PINF-bundled JavaScript Program</h1>\").appendTo(\"BODY\");\n\n}\n",
               "globals": {
                 "$": {
                   "type": "assign"
@@ -19,9 +19,6 @@
                   "type": "call"
                 },
                 "exports": {
-                  "type": "reference"
-                },
-                "console": {
                   "type": "reference"
                 }
               },
@@ -42,7 +39,7 @@
             "wrapper": {
               "type": "commonjs",
               "top": "function(require, exports, module) {var __dirname = '';",
-              "code": "function(require, exports, module) {var __dirname = '';\n\nvar $ = require(\"./lib/zepto\").window.$;\n\n\nexports.main = function () {\n\nconsole.log(\"$\", $);\n\nconsole.log(\"2\", $(\"<h1>Hello from PINF-bundled JavaScript Program</h1>\"));\n\n\t$(\"<h1>Hello from PINF-bundled JavaScript Program</h1>\").appendTo(\"BODY\");\n\n}\n\n}",
+              "code": "function(require, exports, module) {var __dirname = '';\n\nvar $ = require(\"./lib/zepto\").window.$;\n\n\nexports.main = function () {\n\n\t$(\"<h1>Hello from PINF-bundled JavaScript Program</h1>\").appendTo(\"BODY\");\n\n}\n\n}",
               "bottom": "}"
             },
             "dependencies": {
@@ -200,7 +197,7 @@
         },
         "expectExistingModules": {},
         "bundle": {
-          "path": "/playground/2014-12-26-promise-actor/pinf-for-github-pages/demo/bundles/demo.js"
+          "path": "/playground/2014-12-26-promise-actor/pinf-to-github-pages/demo/bundles/demo.js"
         },
         "warnings": [],
         "errors": [],
@@ -216,7 +213,7 @@
   "#pinf": {
     "status": 200,
     "data": {
-      "rootBundlePath": "/playground/2014-12-26-promise-actor/pinf-for-github-pages/demo/bundles/demo.js"
+      "rootBundlePath": "/playground/2014-12-26-promise-actor/pinf-to-github-pages/demo/bundles/demo.js"
     }
   }
 }
