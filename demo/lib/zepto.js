@@ -1,9 +1,4 @@
 
-
-// TODO: Don't wrap this explicitly! The bundler should know what to do if there is only one export!
-//       @see https://github.com/pinf-it/pinf-it-bundler/issues/5
-
-
 /* Zepto v1.1.6 - zepto event ajax form ie - zeptojs.com/license */
 
 var Zepto = (function() {
@@ -1592,5 +1587,3 @@ window.$ === undefined && (window.$ = Zepto)
     }
   }
 })(Zepto)
-
-
