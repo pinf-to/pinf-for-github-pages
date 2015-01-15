@@ -3,8 +3,6 @@
 // TODO: Don't wrap this explicitly! The bundler should know what to do if there is only one export!
 //       @see https://github.com/pinf-it/pinf-it-bundler/issues/5
 
-define(function () {
-
 
 /* Zepto v1.1.6 - zepto event ajax form ie - zeptojs.com/license */
 
@@ -1559,6 +1557,7 @@ window.$ === undefined && (window.$ = Zepto)
 
 })(Zepto)
 
+
 ;(function($){
   // __proto__ doesn't exist on IE<11, so redefine
   // the Z function to use object extension instead
@@ -1595,5 +1594,3 @@ window.$ === undefined && (window.$ = Zepto)
 })(Zepto)
 
 
-return Zepto;
-});

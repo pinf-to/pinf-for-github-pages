@@ -140,17 +140,19 @@ function define(id, dependencies, moduleInitializer) {
 }
 define.amd = { jQuery: true };
 require.def = define;
-// @pinf-bundle-module: {"file":"demo.js","mtime":1421297943,"wrapper":"commonjs","format":"commonjs","id":"/demo.js"}
+// @pinf-bundle-module: {"file":"demo.js","mtime":1421298737,"wrapper":"commonjs","format":"commonjs","id":"/demo.js"}
 require.memoize("/demo.js", 
 function(require, exports, module) {var __dirname = '';
 
 var ZEPTO = require("./lib/zepto");
 
 
-exports.main = function (ZEPTO) {
+exports.main = function () {
 
 
 console.log("ZEPTO", ZEPTO);
+
+//<h1>Hello from HTML</h1>
 
 	console.log("DEMO!!");
 
@@ -176,14 +178,13 @@ wrapAMD(function(require, define) {
 
 })
 , {"filename":"lib/jquery.js"});
-// @pinf-bundle-module: {"file":"lib/zepto.js","mtime":1421298231,"wrapper":"amd","format":"amd","id":"/lib/zepto.js"}
+// @pinf-bundle-module: {"file":"lib/zepto.js","mtime":1421298736,"wrapper":"commonjs/leaky","format":"leaky","id":"/lib/zepto.js"}
 require.memoize("/lib/zepto.js", 
+function(require, exports, module) {var __dirname = 'lib';
 
 
 // TODO: Don't wrap this explicitly! The bundler should know what to do if there is only one export!
 //       @see https://github.com/pinf-it/pinf-it-bundler/issues/5
-
-define([],function () {
 
 
 /* Zepto v1.1.6 - zepto event ajax form ie - zeptojs.com/license */
@@ -1739,6 +1740,7 @@ window.$ === undefined && (window.$ = Zepto)
 
 })(Zepto)
 
+
 ;(function($){
   // __proto__ doesn't exist on IE<11, so redefine
   // the Z function to use object extension instead
@@ -1775,8 +1777,25 @@ window.$ === undefined && (window.$ = Zepto)
 })(Zepto)
 
 
-return Zepto;
-})
+
+return {
+    Zepto: (typeof Zepto !== "undefined") ? Zepto : null,
+    window: (typeof window !== "undefined") ? window : null,
+    Array: (typeof Array !== "undefined") ? Array : null,
+    String: (typeof String !== "undefined") ? String : null,
+    Object: (typeof Object !== "undefined") ? Object : null,
+    getComputedStyle: (typeof getComputedStyle !== "undefined") ? getComputedStyle : null,
+    RegExp: (typeof RegExp !== "undefined") ? RegExp : null,
+    JSON: (typeof JSON !== "undefined") ? JSON : null,
+    Math: (typeof Math !== "undefined") ? Math : null,
+    parseFloat: (typeof parseFloat !== "undefined") ? parseFloat : null,
+    document: (typeof document !== "undefined") ? document : null,
+    clearTimeout: (typeof clearTimeout !== "undefined") ? clearTimeout : null,
+    setTimeout: (typeof setTimeout !== "undefined") ? setTimeout : null,
+    Date: (typeof Date !== "undefined") ? Date : null,
+    encodeURIComponent: (typeof encodeURIComponent !== "undefined") ? encodeURIComponent : null
+};
+}
 , {"filename":"lib/zepto.js"});
 // @pinf-bundle-ignore: 
 });
