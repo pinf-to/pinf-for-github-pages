@@ -140,14 +140,17 @@ function define(id, dependencies, moduleInitializer) {
 }
 define.amd = { jQuery: true };
 require.def = define;
-// @pinf-bundle-module: {"file":"demo.js","mtime":1421298941,"wrapper":"commonjs","format":"commonjs","id":"/demo.js"}
+// @pinf-bundle-module: {"file":"demo.js","mtime":1421299031,"wrapper":"commonjs","format":"commonjs","id":"/demo.js"}
 require.memoize("/demo.js", 
 function(require, exports, module) {var __dirname = '';
 
-var ZEPTO = require("./lib/zepto").Zepto;
+var ZEPTO = require("./lib/zepto");
 
 
 exports.main = function () {
+
+console.log("ZEPTO", ZEPTO);
+
 
 	ZEPTO("<h1>Hello from PINF-bundled JavaScript Program</h1>").appentTo("BODY");
 
@@ -172,7 +175,7 @@ wrapAMD(function(require, define) {
 
 })
 , {"filename":"lib/jquery.js"});
-// @pinf-bundle-module: {"file":"lib/zepto.js","mtime":1421298875,"wrapper":"commonjs/leaky","format":"leaky","id":"/lib/zepto.js"}
+// @pinf-bundle-module: {"file":"lib/zepto.js","mtime":1421298963,"wrapper":"commonjs/leaky","format":"leaky","id":"/lib/zepto.js"}
 require.memoize("/lib/zepto.js", 
 function(require, exports, module) {var __dirname = 'lib';
 
