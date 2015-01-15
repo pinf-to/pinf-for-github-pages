@@ -6,6 +6,12 @@
   },
   "dependencies": {
     "fs-extra": "~0.14.0",
-    "pinf-loader-js": "~0.4.6"
+    "pinf-for-nodejs": "0.1.x",
+    "pinf-it-program-insight": "0.1.x",
+    "pinf-loader-js": "0.4.x",
+    "waitfor": "~0.1.3"
+  },
+  "scripts": {
+    "publish": "cd demo ; npm run-script build ; cd .. ; bin/pinf-publish"
   }
 }

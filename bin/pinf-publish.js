@@ -2,6 +2,8 @@
 const PATH = require("path");
 const FS = require("fs-extra");
 const SPAWN = require("child_process").spawn;
+const WAITFOR = require("waitfor");
+const PROGRAM_INSIGHT = require("pinf-it-program-insight");
 
 
 function main (callback) {
@@ -63,30 +65,96 @@ function main (callback) {
 		], function (err) {
 			if (err) return callback(err);
 
-			var toPath = null;
+			function publishProgram (programDescriptorPath, callback) {
 
-			var indexFile = FS.readFileSync(PATH.join(__dirname, "../lib/templates/index.html"), "utf8");
-			indexFile = indexFile.replace(/%boot\.bundle\.uri%/g, "fireconsole/bundles/plugin.js");
-			indexFile = indexFile.replace(/%boot\.loader\.uri%/g, "fireconsole/bundles/loader.js");
-			toPath = PATH.join(rootPath, "index.html");
-			console.log("Writing file to:", toPath);
-			FS.outputFileSync(toPath, indexFile);
+				return PROGRAM_INSIGHT.parse(programDescriptorPath, {}, function(err, programDescriptor) {
+					if (err) return callback(err);
 
-			toPath = PATH.join(rootPath, "fireconsole/bundles/loader.js");
-			console.log("Writing file to:", toPath);
-			FS.copySync(PATH.join(__dirname, "../node_modules/pinf-loader-js/loader.js"), toPath);
+					function traverse (callback) {
+						var waitfor = WAITFOR.serial(callback);
 
-			// TODO: Remove files that are not needed from branch (i.e. delete and ensure removed from git)
+						if (
+							programDescriptor.combined.config &&
+							programDescriptor.combined.config["github.com/pinf-it/pinf-for-github-pages/0"] &&
+							programDescriptor.combined.config["github.com/pinf-it/pinf-for-github-pages/0"].programs
+						) {
+							for (var programId in programDescriptor.combined.config["github.com/pinf-it/pinf-for-github-pages/0"].programs) {
+								waitfor(
+									PATH.join(PATH.dirname(programDescriptorPath), programDescriptor.combined.config["github.com/pinf-it/pinf-for-github-pages/0"].programs[programId]),
+									publishProgram
+								);
+							}
+						} else {
+							console.log("No programs to publish configured at 'config[\"github.com/pinf-it/pinf-for-github-pages/0\"].programs' in '" + programDescriptor.descriptorPaths.join(", ") + "'");
+						}
 
-			return runCommands([
-				'git add .',
-				'git commit -m "[pinf-for-github-pages] Wrote boot files"',
-				'git push origin',
-				'git checkout master'
-			], function (err) {
+						return waitfor();
+					}
+
+					if (
+						!programDescriptor.combined.boot ||
+						!programDescriptor.combined.boot.package
+					) {
+						return traverse(callback);
+					}
+
+					console.log("Publish program:", programDescriptorPath);
+
+					var templatePath = (
+						programDescriptor.combined.config &&
+						programDescriptor.combined.config["github.com/pinf-it/pinf-for-github-pages/0"] &&
+						programDescriptor.combined.config["github.com/pinf-it/pinf-for-github-pages/0"].templates &&
+						programDescriptor.combined.config["github.com/pinf-it/pinf-for-github-pages/0"].templates["index.html"] &&
+						PATH.join(PATH.dirname(programDescriptorPath), programDescriptor.combined.config["github.com/pinf-it/pinf-for-github-pages/0"].templates["index.html"])
+					) || PATH.join(__dirname, "../lib/templates/index.html");
+
+					var loaderPath = (
+						programDescriptor.combined.config &&
+						programDescriptor.combined.config["github.com/pinf-it/pinf-for-github-pages/0"] &&
+						programDescriptor.combined.config["github.com/pinf-it/pinf-for-github-pages/0"].templates &&
+						programDescriptor.combined.config["github.com/pinf-it/pinf-for-github-pages/0"].templates["loader.js"] &&
+						PATH.join(PATH.dirname(programDescriptorPath), programDescriptor.combined.config["github.com/pinf-it/pinf-for-github-pages/0"].templates["loader.js"])
+					) || PATH.join(__dirname, "../node_modules/pinf-loader-js/loader.js");
+
+
+					var toPath = null;
+					var indexFile = FS.readFileSync(templatePath, "utf8");
+					var relativeBaseUri = PATH.relative(rootPath, PATH.dirname(programDescriptorPath));
+
+
+					// TODO: Arrive at minimal set of core variables and options to add own.
+					indexFile = indexFile.replace(/%boot\.bundle\.uri%/g, relativeBaseUri + ("/bundles/" + programDescriptor.combined.packages[programDescriptor.combined.boot.package].combined.exports.main).replace(/\/\.\//, "/"));
+					indexFile = indexFile.replace(/%boot\.loader\.uri%/g, relativeBaseUri + "/bundles/loader.js");
+					toPath = PATH.join(rootPath, "index.html");
+					console.log("Writing file to:", toPath);
+					FS.outputFileSync(toPath, indexFile);
+
+					// TODO: Use loader if mapped in program/package otherwise fall back to default one here.
+					toPath = PATH.join(rootPath, relativeBaseUri + "/bundles/loader.js");
+					console.log("Writing file to:", toPath);
+					FS.copySync(loaderPath, toPath);
+
+
+					return traverse(callback);
+				});
+			}
+
+			return publishProgram(PATH.join(rootPath, "program.json"), function (err) {
 				if (err) return callback(err);
 
-				return callback(null);
+				// POLICY: Only needed files should be left here.
+				// TODO: Remove files that are not needed from branch (i.e. delete and ensure removed from git)
+
+				return runCommands([
+					'git add .',
+					'git commit -m "[pinf-for-github-pages] Wrote boot files"',
+					'git push origin gh-pages',
+					'git checkout master'
+				], function (err) {
+					if (err) return callback(err);
+
+					return callback(null);
+				});
 			});
 		});
 	});
