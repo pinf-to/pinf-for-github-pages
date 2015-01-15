@@ -1,6 +1,6 @@
 {
-  "name": "pinf-for-github-pages",
-  "version": "0.0.1",
+  "name": "pinf-to-github-pages",
+  "version": "0.1.0",
   "bin": {
     "pinf-publish": "./bin/pinf-publish"
   },
