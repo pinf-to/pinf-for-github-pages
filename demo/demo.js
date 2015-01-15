@@ -1,11 +1,11 @@
 
-var JQUERY = require("./lib/jquery");
+var ZEPTO = require("./lib/zepto");
 
 
-exports.main = function (JQUERY) {
+exports.main = function (ZEPTO) {
 
 
-console.log("JQUERY", JQUERY);
+console.log("ZEPTO", ZEPTO);
 
 	console.log("DEMO!!");
 
