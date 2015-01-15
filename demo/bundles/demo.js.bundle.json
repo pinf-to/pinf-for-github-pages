@@ -9,8 +9,8 @@
             "descriptor": {
               "filename": "demo.js",
               "filepath": "demo.js",
-              "mtime": 1421299031,
-              "code": "\nvar ZEPTO = require(\"./lib/zepto\");\n\n\nexports.main = function () {\n\nconsole.log(\"ZEPTO\", ZEPTO);\n\n\n\tZEPTO(\"<h1>Hello from PINF-bundled JavaScript Program</h1>\").appentTo(\"BODY\");\n\n}\n",
+              "mtime": 1421301635,
+              "code": "\nvar ZEPTO = require(\"./lib/zepto\").window.$;\n\n\nexports.main = function () {\n\n\tZEPTO(\"<h1>Hello from PINF-bundled JavaScript Program</h1>\").appentTo(\"BODY\");\n\n}\n",
               "globals": {
                 "ZEPTO": {
                   "type": "assign"
@@ -19,9 +19,6 @@
                   "type": "call"
                 },
                 "exports": {
-                  "type": "reference"
-                },
-                "console": {
                   "type": "reference"
                 }
               },
@@ -42,7 +39,7 @@
             "wrapper": {
               "type": "commonjs",
               "top": "function(require, exports, module) {var __dirname = '';",
-              "code": "function(require, exports, module) {var __dirname = '';\n\nvar ZEPTO = require(\"./lib/zepto\");\n\n\nexports.main = function () {\n\nconsole.log(\"ZEPTO\", ZEPTO);\n\n\n\tZEPTO(\"<h1>Hello from PINF-bundled JavaScript Program</h1>\").appentTo(\"BODY\");\n\n}\n\n}",
+              "code": "function(require, exports, module) {var __dirname = '';\n\nvar ZEPTO = require(\"./lib/zepto\").window.$;\n\n\nexports.main = function () {\n\n\tZEPTO(\"<h1>Hello from PINF-bundled JavaScript Program</h1>\").appentTo(\"BODY\");\n\n}\n\n}",
               "bottom": "}"
             },
             "dependencies": {

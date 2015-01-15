@@ -140,17 +140,14 @@ function define(id, dependencies, moduleInitializer) {
 }
 define.amd = { jQuery: true };
 require.def = define;
-// @pinf-bundle-module: {"file":"demo.js","mtime":1421299031,"wrapper":"commonjs","format":"commonjs","id":"/demo.js"}
+// @pinf-bundle-module: {"file":"demo.js","mtime":1421301635,"wrapper":"commonjs","format":"commonjs","id":"/demo.js"}
 require.memoize("/demo.js", 
 function(require, exports, module) {var __dirname = '';
 
-var ZEPTO = require("./lib/zepto");
+var ZEPTO = require("./lib/zepto").window.$;
 
 
 exports.main = function () {
-
-console.log("ZEPTO", ZEPTO);
-
 
 	ZEPTO("<h1>Hello from PINF-bundled JavaScript Program</h1>").appentTo("BODY");
 
