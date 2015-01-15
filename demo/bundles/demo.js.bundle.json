@@ -1,0 +1,129 @@
+{
+  ".": {
+    "bundles": {
+      "/demo.js": {
+        "modules": {
+          "/demo.js": {
+            "requireId": "/demo",
+            "memoizeId": "/demo.js",
+            "descriptor": {
+              "filename": "demo.js",
+              "filepath": "demo.js",
+              "mtime": 1421297161,
+              "code": "\n\nexports.main = function () {\n\n\n\tconsole.log(\"DEMO!!\");\n\n\n}\n",
+              "globals": {
+                "exports": {
+                  "type": "reference"
+                },
+                "console": {
+                  "type": "reference"
+                }
+              },
+              "syntax": "javascript",
+              "format": "commonjs",
+              "undefine": [],
+              "uses": {},
+              "dependencies": {
+                "static": {},
+                "dynamic": {},
+                "computed": false
+              }
+            },
+            "wrapper": {
+              "type": "commonjs",
+              "top": "function(require, exports, module) {var __dirname = '';",
+              "code": "function(require, exports, module) {var __dirname = '';\n\n\nexports.main = function () {\n\n\n\tconsole.log(\"DEMO!!\");\n\n\n}\n\n}",
+              "bottom": "}"
+            },
+            "dependencies": {
+              "static": {},
+              "dynamic": {},
+              "computed": false
+            },
+            "warnings": [],
+            "errors": []
+          },
+          "/package.json": {
+            "requireId": "/package.json",
+            "memoizeId": "/package.json",
+            "descriptor": {
+              "dirpath": ".",
+              "dirrealpath": "",
+              "id": "",
+              "lookupPaths": [
+                "package.json",
+                ".package.json"
+              ],
+              "descriptorPaths": [
+                "package.json"
+              ],
+              "raw": {
+                "package.json": {
+                  "main": "./demo.js",
+                  "exports": {
+                    "bundles": {
+                      "demo.js": "./demo.js"
+                    }
+                  },
+                  "scripts": {
+                    "build": "rm -Rf .rt ; ../node_modules/.bin/pinf bundle"
+                  }
+                }
+              },
+              "normalized": {
+                ".package.json": {},
+                "package.json": {
+                  "exports": {
+                    "bundles": {
+                      "demo.js": "./demo.js"
+                    },
+                    "scripts": {
+                      "build": "rm -Rf .rt ; ../node_modules/.bin/pinf bundle"
+                    },
+                    "main": "./demo.js"
+                  }
+                }
+              },
+              "combined": {
+                "exports": {
+                  "bundles": {
+                    "demo.js": "./demo.js"
+                  },
+                  "scripts": {
+                    "build": "rm -Rf .rt ; ../node_modules/.bin/pinf bundle"
+                  },
+                  "main": "./demo.js"
+                }
+              },
+              "warnings": [],
+              "errors": [],
+              "memoized": {
+                "main": "/demo.js",
+                "dirpath": "."
+              }
+            },
+            "wrapper": "json"
+          }
+        },
+        "expectExistingModules": {},
+        "bundle": {
+          "path": "/playground/2014-12-26-promise-actor/pinf-for-github-pages/demo/bundles/demo.js"
+        },
+        "warnings": [],
+        "errors": [],
+        "id": "/demo.js"
+      }
+    },
+    "warnings": [],
+    "errors": [],
+    "exports": {
+      "main": "/demo.js"
+    }
+  },
+  "#pinf": {
+    "status": 200,
+    "data": {
+      "rootBundlePath": "/playground/2014-12-26-promise-actor/pinf-for-github-pages/demo/bundles/demo.js"
+    }
+  }
+}
