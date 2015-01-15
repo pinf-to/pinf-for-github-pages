@@ -77,7 +77,70 @@ function wrapAMD(callback) {
     callback(amdRequire, wrappedDefine);
     return exports;
 }
-// @pinf-bundle-module: {"file":"demo.js","mtime":1421297910,"wrapper":"commonjs","format":"commonjs","id":"/demo.js"}
+// @pinf-bundle-header: {"helper":"amd"}
+function define(id, dependencies, moduleInitializer) {
+    if (typeof dependencies === "undefined" && typeof moduleInitializer === "undefined") {
+        if (typeof id === "function") {
+            moduleInitializer = id;
+        } else {
+            var exports = id;
+            moduleInitializer = function() { return exports; }
+        }
+        dependencies = ["require", "exports", "module"];
+        id = null;
+    } else
+    if (Array.isArray(id) && typeof dependencies === "function" && typeof moduleInitializer === "undefined") {
+        moduleInitializer = dependencies;
+        dependencies = id;
+        id = null;
+    } else
+    if (typeof id === "string" && typeof dependencies === "function" && typeof moduleInitializer === "undefined") {
+        moduleInitializer = dependencies;
+        dependencies = ["require", "exports", "module"];
+    }
+    return function(realRequire, exports, module) {
+        function require(id) {
+            if (Array.isArray(id)) {
+                var apis = [];
+                var callback = arguments[1];
+                id.forEach(function(moduleId, index) {
+                    realRequire.async(moduleId, function(api) {
+                        apis[index] = api
+                        if (apis.length === id.length) {
+                            if (callback) callback.apply(null, apis);
+                        }
+                    }, function(err) {
+                        throw err;
+                    });
+                });
+            } else {
+                return realRequire(id);
+            }
+        }
+        require.toUrl = function(id) {
+            return realRequire.sandbox.id.replace(/\/[^\/]*$/, "") + realRequire.id(id);
+        }
+        require.sandbox = realRequire.sandbox;
+        require.id = realRequire.id;
+        if (typeof amdRequireImplementation !== "undefined") {
+            amdRequireImplementation = require;
+        }
+        if (typeof moduleInitializer === "function") {
+            return moduleInitializer.apply(moduleInitializer, dependencies.map(function(name) {
+                if (name === "require") return require;
+                if (name === "exports") return exports;
+                if (name === "module") return module;
+                return require(name);
+            }));
+        } else
+        if (typeof dependencies === "object") {
+            return dependencies;
+        }
+    }
+}
+define.amd = { jQuery: true };
+require.def = define;
+// @pinf-bundle-module: {"file":"demo.js","mtime":1421297943,"wrapper":"commonjs","format":"commonjs","id":"/demo.js"}
 require.memoize("/demo.js", 
 function(require, exports, module) {var __dirname = '';
 
@@ -113,9 +176,16 @@ wrapAMD(function(require, define) {
 
 })
 , {"filename":"lib/jquery.js"});
-// @pinf-bundle-module: {"file":"lib/zepto.js","mtime":1421297929,"wrapper":"commonjs/leaky","format":"leaky","id":"/lib/zepto.js"}
+// @pinf-bundle-module: {"file":"lib/zepto.js","mtime":1421298231,"wrapper":"amd","format":"amd","id":"/lib/zepto.js"}
 require.memoize("/lib/zepto.js", 
-function(require, exports, module) {var __dirname = 'lib';
+
+
+// TODO: Don't wrap this explicitly! The bundler should know what to do if there is only one export!
+//       @see https://github.com/pinf-it/pinf-it-bundler/issues/5
+
+define([],function () {
+
+
 /* Zepto v1.1.6 - zepto event ajax form ie - zeptojs.com/license */
 
 var Zepto = (function() {
@@ -1703,24 +1773,10 @@ window.$ === undefined && (window.$ = Zepto)
     }
   }
 })(Zepto)
-return {
-    Zepto: (typeof Zepto !== "undefined") ? Zepto : null,
-    window: (typeof window !== "undefined") ? window : null,
-    Array: (typeof Array !== "undefined") ? Array : null,
-    String: (typeof String !== "undefined") ? String : null,
-    Object: (typeof Object !== "undefined") ? Object : null,
-    getComputedStyle: (typeof getComputedStyle !== "undefined") ? getComputedStyle : null,
-    RegExp: (typeof RegExp !== "undefined") ? RegExp : null,
-    JSON: (typeof JSON !== "undefined") ? JSON : null,
-    Math: (typeof Math !== "undefined") ? Math : null,
-    parseFloat: (typeof parseFloat !== "undefined") ? parseFloat : null,
-    document: (typeof document !== "undefined") ? document : null,
-    clearTimeout: (typeof clearTimeout !== "undefined") ? clearTimeout : null,
-    setTimeout: (typeof setTimeout !== "undefined") ? setTimeout : null,
-    Date: (typeof Date !== "undefined") ? Date : null,
-    encodeURIComponent: (typeof encodeURIComponent !== "undefined") ? encodeURIComponent : null
-};
-}
+
+
+return Zepto;
+})
 , {"filename":"lib/zepto.js"});
 // @pinf-bundle-ignore: 
 });
