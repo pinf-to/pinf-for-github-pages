@@ -8,6 +8,6 @@ console.log("$", $);
 
 console.log("2", $("<h1>Hello from PINF-bundled JavaScript Program</h1>"));
 
-	$("<h1>Hello from PINF-bundled JavaScript Program</h1>").appentTo("BODY");
+	$("<h1>Hello from PINF-bundled JavaScript Program</h1>").appendTo("BODY");
 
 }
