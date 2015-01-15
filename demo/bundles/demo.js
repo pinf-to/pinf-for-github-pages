@@ -140,7 +140,7 @@ function define(id, dependencies, moduleInitializer) {
 }
 define.amd = { jQuery: true };
 require.def = define;
-// @pinf-bundle-module: {"file":"demo.js","mtime":1421301922,"wrapper":"commonjs","format":"commonjs","id":"/demo.js"}
+// @pinf-bundle-module: {"file":"demo.js","mtime":1421305009,"wrapper":"commonjs","format":"commonjs","id":"/demo.js"}
 require.memoize("/demo.js", 
 function(require, exports, module) {var __dirname = '';
 

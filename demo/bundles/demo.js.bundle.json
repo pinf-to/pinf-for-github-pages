@@ -9,7 +9,7 @@
             "descriptor": {
               "filename": "demo.js",
               "filepath": "demo.js",
-              "mtime": 1421301922,
+              "mtime": 1421305009,
               "code": "\nvar $ = require(\"./lib/zepto\").window.$;\n\n\nexports.main = function () {\n\n\t$(\"<h1>Hello from PINF-bundled JavaScript Program</h1>\").appendTo(\"BODY\");\n\n}\n",
               "globals": {
                 "$": {
