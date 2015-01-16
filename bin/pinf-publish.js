@@ -33,7 +33,9 @@ function main (callback) {
 		    proc.on("error", function(err) {
 		    	return callback(err);
 		    });
+		    var stdout = [];
 		    proc.stdout.on('data', function (data) {
+		    	stdout.push(data.toString());
 				return process.stdout.write(data);
 		    });
 		    proc.stderr.on('data', function (data) {
@@ -45,7 +47,7 @@ function main (callback) {
 		    	if (code) {
 		    		return callback(new Error("Commands exited with code: " + code));
 		    	}
-		        return callback();
+		        return callback(null, stdout.join(""));
 		    });
 		}
 
@@ -54,6 +56,11 @@ function main (callback) {
 	    	'function evil_git_dirty {',
 			'  [[ $(git diff --shortstat 2> /dev/null | tail -n1) != "" ]] && echo "*"',
 			'}',
+			'function parse_git_branch {',
+			'  git branch --no-color 2> /dev/null | sed -e \'/^[^*]/d\' -e \'s/* \\(.*\\)/\\1/\'',
+			'}',
+			'BRANCH=$(parse_git_branch)',
+			'echo "Publishing from branch: $BRANCH"',
 			// TODO: Prevent this from writing to stdout during if comparison.
 			'if evil_git_dirty = "*"; then',
 			'  echo "Commit changes to git first!";',
@@ -61,9 +68,11 @@ function main (callback) {
 			'fi',
 			'git checkout -b gh-pages',
 			'git checkout gh-pages',
-			'git merge master',
-		], function (err) {
+			'git merge $BRANCH',
+		], function (err, stdout) {
 			if (err) return callback(err);
+
+			var originalBranch = stdout.match(/Publishing from branch:\s([^\n]+)\n/)[1];
 
 			function publishProgram (programDescriptorPath, callback) {
 
@@ -149,7 +158,7 @@ function main (callback) {
 					'git add .',
 					'git commit -m "[pinf-for-github-pages] Wrote boot files"',
 					'git push origin gh-pages',
-					'git checkout master'
+					'git checkout ' + originalBranch
 				], function (err) {
 					if (err) return callback(err);
 
