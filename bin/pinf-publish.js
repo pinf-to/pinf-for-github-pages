@@ -132,14 +132,14 @@ function main (callback) {
 
 
 					// TODO: Arrive at minimal set of core variables and options to add own.
-					indexFile = indexFile.replace(/%boot\.bundle\.uri%/g, relativeBaseUri + ("/bundles/" + programDescriptor.combined.packages[programDescriptor.combined.boot.package].combined.exports.main).replace(/\/\.\//, "/"));
-					indexFile = indexFile.replace(/%boot\.loader\.uri%/g, relativeBaseUri + "/bundles/loader.js");
+					indexFile = indexFile.replace(/%boot\.bundle\.uri%/g, (relativeBaseUri?relativeBaseUri+"/":"") + ("bundles/" + programDescriptor.combined.packages[programDescriptor.combined.boot.package].combined.exports.main).replace(/\/\.\//, "/"));
+					indexFile = indexFile.replace(/%boot\.loader\.uri%/g, (relativeBaseUri?relativeBaseUri+"/":"") + "bundles/loader.js");
 					toPath = PATH.join(rootPath, "index.html");
 					console.log("Writing file to:", toPath);
 					FS.outputFileSync(toPath, indexFile);
 
 					// TODO: Use loader if mapped in program/package otherwise fall back to default one here.
-					toPath = PATH.join(rootPath, relativeBaseUri + "/bundles/loader.js");
+					toPath = PATH.join(rootPath, (relativeBaseUri?relativeBaseUri+"/":"") + "bundles/loader.js");
 					console.log("Writing file to:", toPath);
 					FS.copySync(loaderPath, toPath);
 
