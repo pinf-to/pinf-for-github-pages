@@ -12,6 +12,7 @@ Examples:
   * `./demo/` -> [pinf-to.github.io/pinf-to-github-pages](http://pinf-to.github.io/pinf-to-github-pages/)
   * [github.com/fireconsole/harviewer](https://github.com/fireconsole/harviewer) -> [fireconsole.github.io/harviewer](http://fireconsole.github.io/harviewer/)
   * [github.com/fireconsole/widget.console](https://github.com/fireconsole/widget.console) -> [fireconsole.github.io/widget.console](http://fireconsole.github.io/widget.console/)
+  * [github.com/cadorn/Battleshit-Logbook](https://github.com/cadorn/Battleshit-Logbook) -> [cadorn.github.io/Battleshit-Logbook](https://cadorn.github.io/Battleshit-Logbook/)
 
 
 Development
