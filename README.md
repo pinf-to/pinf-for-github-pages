@@ -20,7 +20,7 @@ Development
 
 	npm install
 	npm run-script publish
-	open http://pinf-it.github.io/pinf-it-github-pages/
+	open http://pinf-to.github.io/pinf-to-github-pages/
 
 
 License
