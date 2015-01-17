@@ -13,5 +13,10 @@
   },
   "scripts": {
     "publish": "cd demo ; npm run-script build ; cd .. ; bin/pinf-publish"
+  },
+  "config": {
+    "pio.deploy.converter": {
+      "name": "nodejs-lib"
+    }
   }
 }
