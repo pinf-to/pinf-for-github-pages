@@ -140,7 +140,7 @@ function define(id, dependencies, moduleInitializer) {
 }
 define.amd = { jQuery: true };
 require.def = define;
-// @pinf-bundle-module: {"file":"demo.js","mtime":1421305009,"wrapper":"commonjs","format":"commonjs","id":"/demo.js"}
+// @pinf-bundle-module: {"file":"demo.js","mtime":1421534676,"wrapper":"commonjs","format":"commonjs","id":"/demo.js"}
 require.memoize("/demo.js", 
 function(require, exports, module) {var __dirname = '';
 
@@ -172,7 +172,7 @@ wrapAMD(function(require, define) {
 
 })
 , {"filename":"lib/jquery.js"});
-// @pinf-bundle-module: {"file":"lib/zepto.js","mtime":1421298963,"wrapper":"commonjs/leaky","format":"leaky","id":"/lib/zepto.js"}
+// @pinf-bundle-module: {"file":"lib/zepto.js","mtime":1421534676,"wrapper":"commonjs/leaky","format":"leaky","id":"/lib/zepto.js"}
 require.memoize("/lib/zepto.js", 
 function(require, exports, module) {var __dirname = 'lib';
 
