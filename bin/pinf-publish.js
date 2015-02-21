@@ -4,7 +4,15 @@ const PUBLISH = require("to.pinf.lib/lib/publish");
 
 PUBLISH.for(module, function (API, callback) {
 
-console.log("ENV", process.env);
+	var exitOnDirty = true;
+	if (process.env.npm_config_argv) {
+		if (JSON.parse(process.env.npm_config_argv).original.indexOf("--ignore-dirty") !== -1) {
+			exitOnDirty = false;
+		}
+	}
+
+
+console.log("ENV", process.env.npm_config_argv);
 
 	return API.runCommands([
     	// @source http://stackoverflow.com/a/2658301
@@ -19,7 +27,7 @@ console.log("ENV", process.env);
 		// TODO: Prevent this from writing to stdout during if comparison.
 		'if evil_git_dirty = "*"; then',
 		'  echo "Commit changes to git first!";',
-//		'  exit 1;',
+		exitOnDirty ? '  exit 1;' : '',
 		'fi',
 		'git checkout -b gh-pages',
 		'git checkout gh-pages',
