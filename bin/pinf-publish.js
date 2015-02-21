@@ -55,20 +55,18 @@ PUBLISH.for(module, function (API, callback) {
 
 					console.log("Publish program:", programDescriptorPath);
 
+					var config = API.getConfigFrom(programDescriptor, "github.com/pinf-to/pinf-to-github-pages/0");
+
 					var templatePath = (
-						programDescriptor.combined.config &&
-						programDescriptor.combined.config["github.com/pinf-to/pinf-to-github-pages/0"] &&
-						programDescriptor.combined.config["github.com/pinf-to/pinf-to-github-pages/0"].templates &&
-						programDescriptor.combined.config["github.com/pinf-to/pinf-to-github-pages/0"].templates["index.html"] &&
-						API.PATH.join(API.PATH.dirname(programDescriptorPath), programDescriptor.combined.config["github.com/pinf-to/pinf-to-github-pages/0"].templates["index.html"])
+						config.templates &&
+						config.templates["index.html"] &&
+						API.PATH.join(API.PATH.dirname(programDescriptorPath), config.templates["index.html"])
 					) || API.PATH.join(__dirname, "../lib/templates/index.html");
 
 					var loaderPath = (
-						programDescriptor.combined.config &&
-						programDescriptor.combined.config["github.com/pinf-to/pinf-to-github-pages/0"] &&
-						programDescriptor.combined.config["github.com/pinf-to/pinf-to-github-pages/0"].templates &&
-						programDescriptor.combined.config["github.com/pinf-to/pinf-to-github-pages/0"].templates["loader.js"] &&
-						API.PATH.join(API.PATH.dirname(programDescriptorPath), programDescriptor.combined.config["github.com/pinf-to/pinf-to-github-pages/0"].templates["loader.js"])
+						config.templates &&
+						config.templates["loader.js"] &&
+						API.PATH.join(API.PATH.dirname(programDescriptorPath), config.templates["loader.js"])
 					) || API.PATH.join(__dirname, "../node_modules/pinf-loader-js/loader.js");
 
 
@@ -76,8 +74,6 @@ PUBLISH.for(module, function (API, callback) {
 					var indexFile = API.FS.readFileSync(templatePath, "utf8");
 					var relativeBaseUri = API.PATH.relative(API.getRootPath(), API.PATH.dirname(programDescriptorPath));
 
-
-console.log("programDescriptor", programDescriptor);
 
 					// TODO: Arrive at minimal set of core variables and options to add own.
 					indexFile = indexFile.replace(/%boot\.bundle\.uri%/g, (relativeBaseUri?relativeBaseUri+"/":"") + ("bundles/" + programDescriptor.packages[programDescriptor.boot.package].combined.exports.main).replace(/\/\.\//, "/"));
