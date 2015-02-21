@@ -4,6 +4,8 @@ const PUBLISH = require("to.pinf.lib/lib/publish");
 
 PUBLISH.for(module, function (API, callback) {
 
+console.log("ENV", process.env);
+
 	return API.runCommands([
     	// @source http://stackoverflow.com/a/2658301
     	'function evil_git_dirty {',
