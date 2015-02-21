@@ -4,38 +4,12 @@ const PUBLISH = require("to.pinf.lib/lib/publish");
 
 PUBLISH.for(module, function (API, callback) {
 
-	var exitOnDirty = true;
-	if (process.env.npm_config_argv) {
-		if (JSON.parse(process.env.npm_config_argv).original.indexOf("--ignore-dirty") !== -1) {
-			exitOnDirty = false;
-		}
-	}
-
-
-console.log("ENV", process.env.npm_config_argv);
-
 	return API.runCommands([
-    	// @source http://stackoverflow.com/a/2658301
-    	'function evil_git_dirty {',
-		'  [[ $(git diff --shortstat 2> /dev/null | tail -n1) != "" ]] && echo "*"',
-		'}',
-		'function parse_git_branch {',
-		'  git branch --no-color 2> /dev/null | sed -e \'/^[^*]/d\' -e \'s/* \\(.*\\)/\\1/\'',
-		'}',
-		'BRANCH=$(parse_git_branch)',
-		'echo "Publishing from branch: $BRANCH"',
-		// TODO: Prevent this from writing to stdout during if comparison.
-		'if evil_git_dirty = "*"; then',
-		'  echo "Commit changes to git first!";',
-		exitOnDirty ? '  exit 1;' : '',
-		'fi',
 		'git checkout -b gh-pages',
 		'git checkout gh-pages',
-		'git merge $BRANCH',
+		'git merge ' + API.getGitBranch(),
 	], function (err, stdout) {
 		if (err) return callback(err);
-
-		var originalBranch = stdout.match(/Publishing from branch:\s([^\n]+)\n/)[1];
 
 		return API.getPrograms(function (err, programs) {
 			if (err) return callback(err);
@@ -50,7 +24,7 @@ console.log("ENV", process.env.npm_config_argv);
 					'git add .',
 					'git commit -m "[pinf-for-github-pages] Wrote boot files"',
 					'git push -f origin gh-pages',
-					'git checkout ' + originalBranch
+					'git checkout ' + API.getGitBranch()
 				], function (err) {
 					if (err) return callback(err);
 
