@@ -39,7 +39,7 @@ PUBLISH.for(module, function (API, callback) {
 
 					console.log("Publish program:", programDescriptorPath);
 
-					var config = API.getConfigFrom(programDescriptor, "github.com/pinf-to/pinf-to-github-pages/0");
+					var config = API.getConfigFrom(programDescriptor.combined, "github.com/pinf-to/pinf-to-github-pages/0");
 
 					var templatePath = (
 						config.templates &&
@@ -60,7 +60,7 @@ PUBLISH.for(module, function (API, callback) {
 
 
 					// TODO: Arrive at minimal set of core variables and options to add own.
-					indexFile = indexFile.replace(/%boot\.bundle\.uri%/g, (relativeBaseUri?relativeBaseUri+"/":"") + ("bundles/" + programDescriptor.packages[programDescriptor.boot.package].combined.exports.main).replace(/\/\.\//, "/"));
+					indexFile = indexFile.replace(/%boot\.bundle\.uri%/g, (relativeBaseUri?relativeBaseUri+"/":"") + ("bundles/" + programDescriptor.combined.packages[programDescriptor.combined.boot.package].combined.exports.main).replace(/\/\.\//, "/"));
 					indexFile = indexFile.replace(/%boot\.loader\.uri%/g, (relativeBaseUri?relativeBaseUri+"/":"") + "bundles/loader.js");
 					toPath = API.PATH.join(API.getRootPath(), "index.html");
 					console.log("Writing file to:", toPath);
